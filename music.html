@@ -55,6 +55,7 @@
       </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       async function searchArtist() {
         const apiKey = "8ad23b0eb0mshee694ccf7efa32fp1c017ejsr";
@@ -78,7 +79,40 @@
         try {
           const response = await axios.request(options);
           console.log(response.data);
-          // You can process and display the artist details on the page here
+
+          // Assuming you want to display the first artist result
+          const artist = response.data.artists.items[0];
+          if (artist) {
+            const musicList = document.querySelector(".music-list");
+
+            // Create a new music item for the searched artist
+            const musicItem = document.createElement("div");
+            musicItem.className = "music-item";
+
+            const artistImage = document.createElement("img");
+            artistImage.src = artist.image; // Replace with the correct image property
+            artistImage.alt = artist.name;
+            musicItem.appendChild(artistImage);
+
+            const artistTitle = document.createElement("h3");
+            artistTitle.textContent = artist.name;
+            musicItem.appendChild(artistTitle);
+
+            const artistInfo = document.createElement("p");
+            artistInfo.textContent = "Artist"; // Customize as needed
+            musicItem.appendChild(artistInfo);
+
+            const playButton = document.createElement("a");
+            playButton.href = artist.spotify;
+            playButton.className = "play-button";
+            playButton.innerHTML = '<i class="bx bx-play"></i> Play';
+            musicItem.appendChild(playButton);
+
+            // Add the new music item to the music list
+            musicList.appendChild(musicItem);
+          } else {
+            console.log("Artist not found");
+          }
         } catch (error) {
           console.error(error);
         }
