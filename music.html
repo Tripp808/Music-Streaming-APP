@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusicBox - Music</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <a href="index.html" class="logo">MusicBox</a>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li>
+            <button type="button" onclick="navigateToMusicPage()">Music</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <section class="music-section">
+      <div class="music-content">
+        <h2>Explore Music</h2>
+        <p>
+          Discover a world of melodies and rhythms that resonate with your soul.
+          Our carefully curated collection of tracks from diverse artists will
+          take you on a journey of emotions and creativity.
+        </p>
+      </div>
+      <div class="search-box">
+        <input type="text" id="artistName" placeholder="Enter Artist Name" />
+        <button type="button" onclick="searchArtist()">Search</button>
+      </div>
+      <div class="music-list">
+        <!-- Music Item 1 -->
+        <div class="music-item">
+          <img src="album1.jpg" alt="Album 1" />
+          <h3>Song Title 1</h3>
+          <p>Artist Name 1</p>
+          <a href="#" class="play-button"><i class="bx bx-play"></i> Play</a>
+        </div>
+        <!-- Music Item 2 -->
+        <div class="music-item">
+          <img src="album2.jpg" alt="Album 2" />
+          <h3>Song Title 2</h3>
+          <p>Artist Name 2</p>
+          <a href="#" class="play-button"><i class="bx bx-play"></i> Play</a>
+        </div>
+        <!-- Add more music items as needed -->
+      </div>
+    </section>
+
+    <script>
+      async function searchArtist() {
+        const apiKey = "8ad23b0eb0mshee694ccf7efa32fp1c017ejsr";
+        const endpoint = "https://spotify117.p.rapidapi.com/search/";
+        const artistName = document.getElementById("artistName").value;
+        const type = "artist";
+
+        const options = {
+          method: "GET",
+          url: endpoint,
+          params: {
+            keyword: artistName,
+            type,
+          },
+          headers: {
+            "X-RapidAPI-Key": apiKey,
+            "X-RapidAPI-Host": "spotify117.p.rapidapi.com",
+          },
+        };
+
+        try {
+          const response = await axios.request(options);
+          console.log(response.data);
+          // You can process and display the artist details on the page here
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
